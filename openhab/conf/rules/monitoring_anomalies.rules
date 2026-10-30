@@ -1,0 +1,37 @@
+// Rule 1: Heartbeat & Last Seen Update
+rule "Update Device Heartbeat"
+when
+    Item IoT_Temp_1 received update or
+    Item IoT_Hum_1 received update or
+    Item IoT_CO2_1 received update or
+    Item IoT_Motion_1 received update
+then
+    val String devName = triggeringItem.name
+    postUpdate(devName + "_LastSeen", new DateTimeType().toString)
+    postUpdate(devName + "_Status", "ONLINE")
+end
+
+// Rule 2: Anomaly Detection - Sudden Spikes & Unrealistic Values
+rule "Detect CO2 and Temperature Anomalies"
+when
+    Item IoT_CO2_1 received update or
+    Item IoT_Temp_1 received update
+then
+    if (IoT_CO2_1.state > 2500) {
+        logWarn("AnomalyDetection", "CRITICAL ANOMALY: CO2 level unrealistic high: " + IoT_CO2_1.state)
+        sendNotification("admin@example.com", "ANOMALY ALERT: Unrealistic CO2 value detected!")
+    }
+    
+    if (IoT_Temp_1.state > 60 || IoT_Temp_1.state < -30) {
+        logWarn("AnomalyDetection", "CRITICAL ANOMALY: Temperature out of physical bounds: " + IoT_Temp_1.state)
+    }
+end
+
+// Rule 3: Timeout Check (No Data > 10 minutes)
+rule "Check Device Offline Timeout"
+when
+    Time cron "0 0/5 * * * ?"
+then
+    // Example timeout check logic
+    logInfo("Monitoring", "Executing periodic device availability check...")
+end

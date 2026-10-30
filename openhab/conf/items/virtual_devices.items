@@ -1,0 +1,54 @@
+// Group definitions
+Group gIoTDevices "IoT Devices Group"
+Group:Switch:OR(ON, OFF) gStatus "Device Statuses"
+
+// Device 1: Temp Sensor (Indoor)
+Number IoT_Temp_1 "Indoor Temperature [%.1f °C]" <temperature> (gIoTDevices)
+String IoT_Temp_1_Status "Temp Sensor 1 Status [%s]" (gStatus)
+DateTime IoT_Temp_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 2: Humidity Sensor
+Number IoT_Hum_1 "Indoor Humidity [%.1f %%]" <humidity> (gIoTDevices)
+String IoT_Hum_1_Status "Humidity Sensor Status [%s]" (gStatus)
+DateTime IoT_Hum_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 3: Motion Sensor
+Switch IoT_Motion_1 "Hallway Motion [%s]" <motion> (gIoTDevices)
+String IoT_Motion_1_Status "Motion Sensor Status [%s]" (gStatus)
+DateTime IoT_Motion_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 4: Smart Light
+Switch IoT_Light_1 "Living Room Light [%s]" <lightbulb> (gIoTDevices)
+String IoT_Light_1_Status "Light Status [%s]" (gStatus)
+DateTime IoT_Light_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 5: CO2 Sensor
+Number IoT_CO2_1 "CO2 Level [%d ppm]" <carbondioxide> (gIoTDevices)
+String IoT_CO2_1_Status "CO2 Sensor Status [%s]" (gStatus)
+DateTime IoT_CO2_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 6: Door Contact
+Contact IoT_Door_1 "Front Door [%s]" <door> (gIoTDevices)
+String IoT_Door_1_Status "Door Sensor Status [%s]" (gStatus)
+DateTime IoT_Door_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 7: Smart Plug
+Switch IoT_Plug_1 "Smart Plug Power [%s]" <poweroutlet> (gIoTDevices)
+Number IoT_Plug_1_Power "Power Usage [%.1f W]" <energy> (gIoTDevices)
+String IoT_Plug_1_Status "Plug Status [%s]" (gStatus)
+DateTime IoT_Plug_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 8: Leak Sensor
+Switch IoT_Leak_1 "Water Leak Sensor [%s]" <water> (gIoTDevices)
+String IoT_Leak_1_Status "Leak Sensor Status [%s]" (gStatus)
+DateTime IoT_Leak_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 9: Pressure Sensor
+Number IoT_Press_1 "Barometric Pressure [%.1f hPa]" <pressure> (gIoTDevices)
+String IoT_Press_1_Status "Pressure Sensor Status [%s]" (gStatus)
+DateTime IoT_Press_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"
+
+// Device 10: Smart Lock
+Switch IoT_Lock_1 "Smart Lock [%s]" <lock> (gIoTDevices)
+String IoT_Lock_1_Status "Lock Status [%s]" (gStatus)
+DateTime IoT_Lock_1_LastSeen "Last Seen [%1$tH:%1$tM:%1$tS]"

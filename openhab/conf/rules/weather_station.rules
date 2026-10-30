@@ -1,0 +1,16 @@
+rule "Weather Station Processing"
+when
+    Item OutdoorTemperature received update
+then
+    // Перевірка на наявність даних перед зчитуванням
+    if (OutdoorTemperature.state != NULL && OutdoorTemperature.state != UNDEF) {
+        val Number temp = OutdoorTemperature.state as Number
+        logInfo("weather_station", "Outdoor Temperature updated: " + temp + " °C")
+        
+        if (temp > 25.0) {
+            logInfo("weather_station", "High outdoor temperature detected: " + temp)
+        }
+    } else {
+        logWarn("weather_station", "OutdoorTemperature state is NULL or UNDEF! Skipping calculation.")
+    }
+end

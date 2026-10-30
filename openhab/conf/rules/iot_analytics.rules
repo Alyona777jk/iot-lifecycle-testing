@@ -1,0 +1,20 @@
+rule "IoT Analytics Aggregation"
+when
+    Time cron "0 0/5 * * * ?"
+then
+    if (Hum_LivingRoom.state != NULL && Hum_LivingRoom.state != UNDEF) {
+        // Correct syntax: minimumSince() returns HistoricItem -> .state returns State
+        val minItem = Hum_LivingRoom.minimumSince(now.minusMinutes(15))
+        val avgState = Hum_LivingRoom.averageSince(now.minusHours(1))
+        
+        if (minItem !== null && avgState !== null) {
+            val Number minHum = minItem.state as Number
+            val Number avgHum = avgState as Number
+            logInfo("iot_analytics", "Living Room Humidity -> Min (15m): " + minHum + "%, Avg (1h): " + avgHum + "%")
+        } else {
+            logWarn("iot_analytics", "rrd4j query returned null values (insufficient data points).")
+        }
+    } else {
+        logWarn("iot_analytics", "Hum_LivingRoom has no valid state for rrd4j persistence query.")
+    }
+end

@@ -1,0 +1,26 @@
+rule "Automatic Irrigation Control"
+when
+    Item Greenhouse_SoilHum changed
+then
+    val soilHum = Greenhouse_SoilHum.state as Number
+    if (soilHum < 30 && Greenhouse_Pump.state == OFF) {
+        Greenhouse_Pump.sendCommand(ON)
+        logInfo("GreenhouseRules", "Авто-полив УВІМКНЕНО (Вологість < 30%)")
+    } else if (soilHum > 60 && Greenhouse_Pump.state == ON) {
+        Greenhouse_Pump.sendCommand(OFF)
+        logInfo("GreenhouseRules", "Авто-полив ВИМКНЕНО (Вологість > 60%)")
+    }
+end
+
+rule "Climate Temperature Protection"
+when
+    Item Greenhouse_AirTemp changed
+then
+    val temp = Greenhouse_AirTemp.state as Number
+    if (temp < 18.0) {
+        Greenhouse_Heater.sendCommand(ON)
+    } else if (temp > 25.0) {
+        Greenhouse_Heater.sendCommand(OFF)
+        Greenhouse_Window.sendCommand(90)
+    }
+end
